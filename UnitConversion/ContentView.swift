@@ -8,6 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    
+    let typesOfUnits = ["Temperature", "Length", "Time", "Volume"]
+    let tempUnits: [UnitTemperature] = [.celsius, .fahrenheit, .kelvin]
+    let lengthUnits: [UnitLength] = [.meters, .kilometers, .feet, .yards, .miles]
+    let timeUnits: [UnitDuration] = [.seconds, .minutes, .hours]
+    let volumeUnits: [UnitVolume] = [.milliliters, .liters, .cups, .pints, .gallons]
+    
+    
+    
+    // two sections
+    // first section: choose from type of units
+    // second section: enter 
     var body: some View {
         VStack {
             Image(systemName: "globe")
