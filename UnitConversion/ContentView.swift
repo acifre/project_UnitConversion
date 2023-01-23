@@ -9,8 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State private var unitType = "Length"
+    @State private var valueToConvert = 0.0
     
     let typesOfUnits = ["Temperature", "Length", "Time", "Volume"]
+    
+    
     let tempUnits: [UnitTemperature] = [.celsius, .fahrenheit, .kelvin]
     let lengthUnits: [UnitLength] = [.meters, .kilometers, .feet, .yards, .miles]
     let timeUnits: [UnitDuration] = [.seconds, .minutes, .hours]
@@ -20,15 +24,26 @@ struct ContentView: View {
     
     // two sections
     // first section: choose from type of units
-    // second section: enter 
+    // second section: enter in toConvert and unit
+    // third section: show conversion
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            Form {
+                Section("Pick Unit Type") {
+                    Picker("Pick Units", selection: $unitType) {
+                        ForEach(typesOfUnits, id: \.self) { unit in
+                            Text(unit)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                }
+                
+
+            }
+            .navigationTitle("UnitConversion")
         }
-        .padding()
     }
 }
 
