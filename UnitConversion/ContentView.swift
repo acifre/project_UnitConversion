@@ -103,6 +103,7 @@ struct ContentView: View {
                     Spacer()
                 }
                 .font(.largeTitle)
+                .fontWeight(.bold)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity, maxHeight: 200)
                 .background(.blue)
