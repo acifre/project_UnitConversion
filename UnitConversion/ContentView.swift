@@ -17,7 +17,7 @@ struct ContentView: View {
     @State private var toUnitIndex = 1
 
     
-    let typesOfUnitStrings = ["Temperature", "Length", "Time", "Volume"]
+    let typesOfUnitStrings = ["Temp", "Length", "Time", "Volume"]
     
     
     let tempUnits: [UnitTemperature] = [.celsius, .fahrenheit, .kelvin]
@@ -28,7 +28,7 @@ struct ContentView: View {
     var selectedUnitArray: [Dimension] {
         
         switch selectedUnit {
-        case "Temperature":
+        case "Temp":
             return tempUnits
         case "Length":
             return lengthUnits
@@ -42,6 +42,17 @@ struct ContentView: View {
     }
     
     
+    var convertedValue: Double {
+        let fromUnit = selectedUnitArray[fromUnitIndex]
+        let toUnit = selectedUnitArray[toUnitIndex]
+        let value = Measurement(value: valueToConvert, unit: fromUnit)
+        let converted = value.converted(to: toUnit)
+
+        
+        return converted.value
+    }
+    
+    
     // two sections
     // first section: choose from type of units
     // second section: enter in toConvert and unit
@@ -50,52 +61,71 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                List {
-                    Section("Pick Unit Type") {
-                        Picker("Units", selection: $selectedUnit) {
-                            ForEach(typesOfUnitStrings, id: \.self) { unit in
-                                Text(unit)
+            VStack {
+                Form {
+                        Section("Pick Unit Type") {
+                            Picker("Units", selection: $selectedUnit) {
+                                ForEach(typesOfUnitStrings, id: \.self) { unit in
+                                    Text(unit)
+                                }
                             }
+                            .pickerStyle(.segmented)
                         }
-                        .pickerStyle(.wheel)
-                    }
+                        
+                        Section("Enter Value To Convert") {
+                            TextField("Enter Value:", value: $valueToConvert, format: .number)
+                       
                     
-                    Section("Enter Value") {
-                        TextField("Enter Value:", value: $valueToConvert, format: .number)
-
-
-                    }
-                    
-                    Section("Convert From") {
-                        Picker("From: ", selection: $fromUnitIndex) {
-                            ForEach(0..<selectedUnitArray.count, id: \.self) { index in
-                                Text(selectedUnitArray[index].symbol).tag(selectedUnitArray[index])
-                            }
                         }
-                        .pickerStyle(.segmented)
-                    }
-                    Section("Convert To") {
-                        Picker("To: ", selection: $toUnitIndex) {
-                            ForEach(0..<selectedUnitArray.count, id: \.self) { index in
-                                Text(selectedUnitArray[index].symbol).tag(selectedUnitArray[index])
+                        
+                        Section("Convert From (Unit)") {
+                            Picker("From: ", selection: $fromUnitIndex) {
+                                ForEach(0..<selectedUnitArray.count, id: \.self) { index in
+                                    Text(selectedUnitArray[index].symbol).tag(selectedUnitArray[index])
+                                }
                             }
+                            .pickerStyle(.segmented)
                         }
-                        .pickerStyle(.segmented)
-                    }
+                        Section("Convert To (Unit)") {
+                            Picker("To: ", selection: $toUnitIndex) {
+                                ForEach(0..<selectedUnitArray.count, id: \.self) { index in
+                                    Text(selectedUnitArray[index].symbol).tag(selectedUnitArray[index])
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                        }
                 }
+                
+                Text("\(valueToConvert.removeZerosFromEnd()) \(selectedUnitArray[fromUnitIndex].symbol) is \(convertedValue.removeZerosFromEnd()) \(selectedUnitArray[toUnitIndex].symbol)")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity, maxHeight: 200)
+                    .background(.secondary)
+                    .cornerRadius(20)
+                    .padding()
+                
+                Spacer()
+                
             }
             .navigationTitle("UnitConversion")
         }
     }
     
-    func getUnitType() -> Unit {
-        return UnitVolume.gallons
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .preferredColorScheme(.dark)
+    }
+}
+
+extension Double {
+    func removeZerosFromEnd() -> String {
+        let formatter = NumberFormatter()
+        let number = NSNumber(value: self)
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 16 //maximum digits in Double after dot (maximum precision)
+        return String(formatter.string(from: number) ?? "")
     }
 }
