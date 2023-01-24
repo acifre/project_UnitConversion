@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6C685611297F889D00FF7B50 /* UnitConversion in Resources */ = {isa = PBXBuildFile; fileRef = 6C685610297F889D00FF7B50 /* UnitConversion */; };
 		6CD5DA1A297F406500A387A6 /* UnitConversionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD5DA19297F406500A387A6 /* UnitConversionApp.swift */; };
 		6CD5DA1C297F406500A387A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD5DA1B297F406500A387A6 /* ContentView.swift */; };
 		6CD5DA1E297F406600A387A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CD5DA1D297F406600A387A6 /* Assets.xcassets */; };
@@ -15,7 +14,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6C685610297F889D00FF7B50 /* UnitConversion */ = {isa = PBXFileReference; lastKnownFileType = folder; name = UnitConversion; sourceTree = "<group>"; };
 		6CD5DA16297F406500A387A6 /* UnitConversion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitConversion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CD5DA19297F406500A387A6 /* UnitConversionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConversionApp.swift; sourceTree = "<group>"; };
 		6CD5DA1B297F406500A387A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				6CD5DA27297F823700A387A6 /* Info.plist */,
-				6C685610297F889D00FF7B50 /* UnitConversion */,
 				6CD5DA19297F406500A387A6 /* UnitConversionApp.swift */,
 				6CD5DA1B297F406500A387A6 /* ContentView.swift */,
 				6CD5DA1D297F406600A387A6 /* Assets.xcassets */,
@@ -130,7 +127,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C685611297F889D00FF7B50 /* UnitConversion in Resources */,
 				6CD5DA21297F406600A387A6 /* Preview Assets.xcassets in Resources */,
 				6CD5DA1E297F406600A387A6 /* Assets.xcassets in Resources */,
 			);
