@@ -13,7 +13,8 @@ struct ContentView: View {
     @State private var unitType = "Length"
     @State private var valueToConvert = 0.0
     @State private var selectedUnit = "Length"
-    //@State private var fromUnit = computedType
+    @State private var fromUnitIndex = 0
+    @State private var toUnitIndex = 1
 
     
     let typesOfUnitStrings = ["Temperature", "Length", "Time", "Volume"]
@@ -24,7 +25,7 @@ struct ContentView: View {
     let timeUnits: [UnitDuration] = [.seconds, .minutes, .hours]
     let volumeUnits: [UnitVolume] = [.milliliters, .liters, .cups, .pints, .gallons]
     
-    var selectedUnitArray: Array<Any> {
+    var selectedUnitArray: [Dimension] {
         
         switch selectedUnit {
         case "Temperature":
@@ -60,9 +61,27 @@ struct ContentView: View {
                         .pickerStyle(.wheel)
                     }
                     
-                    Section("Pick Conversions") {
+                    Section("Enter Value") {
                         TextField("Enter Value:", value: $valueToConvert, format: .number)
-                       // Picker("Pick Unit", selection: <#T##Binding<SelectionValue>#>)
+
+
+                    }
+                    
+                    Section("Convert From") {
+                        Picker("From: ", selection: $fromUnitIndex) {
+                            ForEach(0..<selectedUnitArray.count, id: \.self) { index in
+                                Text(selectedUnitArray[index].symbol).tag(selectedUnitArray[index])
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    Section("Convert To") {
+                        Picker("To: ", selection: $toUnitIndex) {
+                            ForEach(0..<selectedUnitArray.count, id: \.self) { index in
+                                Text(selectedUnitArray[index].symbol).tag(selectedUnitArray[index])
+                            }
+                        }
+                        .pickerStyle(.segmented)
                     }
                 }
             }
