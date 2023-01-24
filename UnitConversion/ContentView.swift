@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+//import Foundation
 
 struct ContentView: View {
     
     @State private var unitType = "Length"
     @State private var valueToConvert = 0.0
+    @State private var selectedUnit = "Length"
+    //@State private var fromUnit = computedType
+
     
-    let typesOfUnits = ["Temperature", "Length", "Time", "Volume"]
+    let typesOfUnitStrings = ["Temperature", "Length", "Time", "Volume"]
     
     
     let tempUnits: [UnitTemperature] = [.celsius, .fahrenheit, .kelvin]
@@ -20,6 +24,21 @@ struct ContentView: View {
     let timeUnits: [UnitDuration] = [.seconds, .minutes, .hours]
     let volumeUnits: [UnitVolume] = [.milliliters, .liters, .cups, .pints, .gallons]
     
+    var selectedUnitArray: Array<Any> {
+        
+        switch selectedUnit {
+        case "Temperature":
+            return tempUnits
+        case "Length":
+            return lengthUnits
+        case "Time":
+            return timeUnits
+        case "Volume":
+            return volumeUnits
+        default:
+            return lengthUnits
+        }
+    }
     
     
     // two sections
@@ -31,19 +50,28 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section("Pick Unit Type") {
-                    Picker("Pick Units", selection: $unitType) {
-                        ForEach(typesOfUnits, id: \.self) { unit in
-                            Text(unit)
+                List {
+                    Section("Pick Unit Type") {
+                        Picker("Units", selection: $selectedUnit) {
+                            ForEach(typesOfUnitStrings, id: \.self) { unit in
+                                Text(unit)
+                            }
                         }
+                        .pickerStyle(.wheel)
                     }
-                    .pickerStyle(.wheel)
+                    
+                    Section("Pick Conversions") {
+                        TextField("Enter Value:", value: $valueToConvert, format: .number)
+                       // Picker("Pick Unit", selection: <#T##Binding<SelectionValue>#>)
+                    }
                 }
-                
-
             }
             .navigationTitle("UnitConversion")
         }
+    }
+    
+    func getUnitType() -> Unit {
+        return UnitVolume.gallons
     }
 }
 
