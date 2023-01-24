@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @FocusState var valueIsFocused: Bool
+    
     @State private var unitType = "Length"
     @State private var valueToConvert = 0.0
     @State private var selectedUnit = "Length"
@@ -52,13 +54,6 @@ struct ContentView: View {
         return converted.value
     }
     
-    
-    // two sections
-    // first section: choose from type of units
-    // second section: enter in toConvert and unit
-    // third section: show conversion
-    
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -74,8 +69,8 @@ struct ContentView: View {
                         
                         Section("Enter Value To Convert") {
                             TextField("Enter Value:", value: $valueToConvert, format: .number)
-                       
-                    
+                                .keyboardType(.decimalPad)
+                                .focused($valueIsFocused)
                         }
                         
                         Section("Convert From (Unit)") {
@@ -95,19 +90,37 @@ struct ContentView: View {
                             .pickerStyle(.segmented)
                         }
                 }
-                
-                Text("\(valueToConvert.removeZerosFromEnd()) \(selectedUnitArray[fromUnitIndex].symbol) is \(convertedValue.removeZerosFromEnd()) \(selectedUnitArray[toUnitIndex].symbol)")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, maxHeight: 200)
-                    .background(.secondary)
-                    .cornerRadius(20)
-                    .padding()
-                
+
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text("\(valueToConvert.removeZerosFromEnd()) \(selectedUnitArray[fromUnitIndex].symbol)")
+                    Spacer()
+                    Image(systemName: "arrow.right")
+                        .foregroundColor(.white)
+                    Spacer()
+                    Text("\(convertedValue.removeZerosFromEnd()) \(selectedUnitArray[toUnitIndex].symbol)")
+                    Spacer()
+                }
+                .font(.largeTitle)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, maxHeight: 200)
+                .background(.blue)
+                .cornerRadius(20)
+                .padding()
+                Spacer()
                 Spacer()
                 
             }
             .navigationTitle("UnitConversion")
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        valueIsFocused = false
+                    }
+                }
+            }
         }
     }
     
